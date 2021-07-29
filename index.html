@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Snake Game</title>
+    </head>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script >
+       width = 20;
+       unit = 20;
+       snake = [];
+       head_x=10; head_y=10;
+       snake_length = 1;
+       denta_x=0; denta_y=0;
+       food_x=15;food_y=15;
+              const myCanvas = document.getElementById("canvas");
+              const ctx = myCanvas.getContext("2d");
+              set = setInterval(game,100);
+              document.addEventListener("keydown", button_handle);
+
+              function button_handle(key){
+                  switch(key.keyCode){
+                       case 37:   //trai
+                           denta_x -= 1; denta_y=0;
+                           break;
+                       case 38:   //len
+                           denta_x = 0; denta_y -= 1;
+                           break;                       
+                       case 39:   //phai
+                           denta_x +=1; denta_y = 0;
+                           break;
+                       case 40:   //xuong
+                           denta_x = 0; denta_y = +1;
+                           break;
+                  }
+              }
+
+              function game(){
+                  ctx.clearRect(0,0,300,600);
+                  head_x = head_x + denta_x;
+                  head_y = head_y + denta_y;
+                  
+                  if(head_x<0) head_x = width -1;
+                  if(head_y<0) head_y = width -1; 
+                  if(head_x > width -1 ) head_x = 0;
+                  if(head_y > width -1 ) head_y = 0;
+
+                  ctx.fillStyle = 'black';
+                  ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
+
+                  for (var i=1;i<snake.length;i++){
+                    ctx.fillStyle='yellow';
+                    ctx.fillRect(snake[i].x*unit,snake[i].y*unit,unit-2,unit-2);
+                }
+                snake.push({x:head_x,y:head_y});
+                 
+                if(food_x==head_x && head_y==food_y){
+                    snake_length ++;
+                    food_x = Math.floor(Math.random()*width);
+                    food_y = Math.floor(Math.random()*width);
+                }
+                ctx.fillStyle='red';
+                ctx.fillRect(food_x*unit,food_y*unit,unit-2,unit-2);
+                
+
+
+
+
+
+            }
+
+
+
+    </script>
+</html>
